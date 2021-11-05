@@ -1,10 +1,19 @@
 import React, { useContext } from "react";
-import { Dialog, withStyles, Box, Typography, makeStyles, List, ListItem } from "@material-ui/core";
+import {
+  Dialog,
+  withStyles,
+  Box,
+  Typography,
+  makeStyles,
+  List,
+  ListItem,
+} from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import { clientId } from "../../constants/data";
 
 //components
 import { AccountContext } from "../../context/AccountProvider";
+import { addUser } from "../../services/api";
 
 const style = {
   dialogPaper: {
@@ -55,9 +64,10 @@ const Login = ({ classes }) => {
 
   const { setAccount } = useContext(AccountContext);
 
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     console.log("login success", res.profileObj);
     setAccount(res.profileObj);
+    await addUser(res.profileObj);
   };
 
   const onLoginFailure = () => {
@@ -72,11 +82,17 @@ const Login = ({ classes }) => {
     >
       <Box className={classname.component}>
         <Box className={classname.leftComponent}>
-          <Typography className={classname.title}>To use WhatsApp on your computer:</Typography>
+          <Typography className={classname.title}>
+            To use WhatsApp on your computer:
+          </Typography>
           <List className={classname.list}>
             <ListItem>1. Open WhatsApp on your phone</ListItem>
-            <ListItem>2. Tap Menu or Settings and select Linked Device</ListItem>
-            <ListItem>3. Point your phone to this screen to capture the code</ListItem>
+            <ListItem>
+              2. Tap Menu or Settings and select Linked Device
+            </ListItem>
+            <ListItem>
+              3. Point your phone to this screen to capture the code
+            </ListItem>
           </List>
         </Box>
         <Box style={{ position: "relative" }}>

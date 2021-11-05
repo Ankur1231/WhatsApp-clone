@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   header: {
     height: 115,
-    backgroundColor: "#00bfa5",
+    backgroundColor: "#128C7E",
     boxShadow: "none",
   },
   component: {

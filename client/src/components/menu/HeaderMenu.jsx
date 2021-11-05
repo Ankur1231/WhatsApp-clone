@@ -6,6 +6,7 @@ import { clientId } from "../../constants/data";
 
 //components
 import { AccountContext } from "../../context/AccountProvider";
+import InfoDrawer from "../Drawer/InfoDrawer";
 
 const useStyles = makeStyles({
   menuItems: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const HeaderMenu = () => {
   const [open, setOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const { setAccount } = useContext(AccountContext);
   const classes = useStyles();
 
@@ -39,6 +41,10 @@ const HeaderMenu = () => {
     alert("logged out successfully");
     console.clear();
     setAccount("");
+  };
+
+  const handelOpenDrawer = () => {
+    setOpenDrawer(true);
   };
 
   return (
@@ -60,7 +66,13 @@ const HeaderMenu = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem className={classes.menuItems} onClick={handleClose}>
+        <MenuItem
+          className={classes.menuItems}
+          onClick={() => {
+            handleClose();
+            handelOpenDrawer();
+          }}
+        >
           Profile
         </MenuItem>
         <MenuItem className={classes.menuItems} onClick={handleClose}>
@@ -72,6 +84,7 @@ const HeaderMenu = () => {
           ></GoogleLogout>
         </MenuItem>
       </Menu>
+      <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} />
     </>
   );
 };
