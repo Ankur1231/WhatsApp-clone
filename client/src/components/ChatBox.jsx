@@ -3,6 +3,7 @@ import { Dialog, withStyles, Box, Typography, makeStyles, List, ListItem } from 
 
 //components
 import Menu from "./menu/Menu";
+import Chat from "./chat/Chat";
 
 const style = {
   dialogPaper: {
@@ -25,6 +26,9 @@ const useStyles = makeStyles({
   },
   rightComponent: {
     borderLeft: `1px solid rgba(0,0,0,0.14)`,
+    width: "80%",
+    minWidth: 300,
+    height: "100%",
   },
 });
 
@@ -41,7 +45,9 @@ const ChatBox = ({ classes }) => {
         <Box className={classname.leftComponent}>
           <Menu />
         </Box>
-        <Box className={classname.rightComponent}>hi</Box>
+        <Box className={classname.rightComponent}>
+          <Chat />
+        </Box>
       </Box>
     </Dialog>
   );
