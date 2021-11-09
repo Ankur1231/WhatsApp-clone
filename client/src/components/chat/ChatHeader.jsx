@@ -4,6 +4,7 @@ import { Search, MoreVert, More } from "@material-ui/icons";
 
 //components
 import { UserContext } from "../../context/UserProvider";
+import { AccountContext } from "../../context/AccountProvider";
 
 const useStyles = makeStyles({
   header: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles({
 
 const ChatHeader = () => {
   const { person } = useContext(UserContext);
+  const { activeUsers } = useContext(AccountContext);
   const classes = useStyles();
   console.log(person);
 
@@ -47,7 +49,11 @@ const ChatHeader = () => {
       <img src={person.imageUrl} alt="dp" className={classes.dp} />
       <Box>
         <Typography className={classes.name}>{person.name}</Typography>
-        <Typography className={classes.status}>Online</Typography>
+        <Typography className={classes.status}>
+          {activeUsers?.find((user) => user.userId === person.googleId)
+            ? "Online"
+            : "Offline"}
+        </Typography>
       </Box>
       <Box className={classes.rightContainer}>
         <Search />

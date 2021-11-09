@@ -18,7 +18,7 @@ const Conversations = ({ text }) => {
 
   const classes = useStyles();
 
-  const { account } = useContext(AccountContext);
+  const { account, socket, setActiveUsers } = useContext(AccountContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +31,19 @@ const Conversations = ({ text }) => {
     fetchData();
   }, [text]);
 
+  useEffect(() => {
+    socket.current.emit("addUser", account.googleId);
+    socket.current.on("getUsers", (users) => {
+      setActiveUsers(users);
+    });
+  }, [account]);
+
   return (
     <Box className={classes.component}>
-      {users.map((user) => user.googleId !== account.googleId && <Conversation user={user} />)}
+      {users.map(
+        (user) =>
+          user.googleId !== account.googleId && <Conversation user={user} />
+      )}
     </Box>
   );
 };
